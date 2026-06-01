@@ -3,80 +3,100 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JTS Celebration Links</title>
+<title>JTS — New Account!</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:#0a0a0a;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;padding:2rem;}
-.header{text-align:center;margin-bottom:2.5rem;}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.5rem,5vw,2.5rem);color:rgba(255,255,255,0.2);letter-spacing:0.3em;margin-bottom:0.5rem;}
-.title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,8vw,4rem);color:#fff;letter-spacing:0.1em;}
+.header{text-align:center;margin-bottom:2rem;}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:clamp(1rem,4vw,1.8rem);color:rgba(255,255,255,0.2);letter-spacing:0.3em;margin-bottom:0.5rem;}
+.title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,8vw,3.5rem);color:#fff;letter-spacing:0.1em;}
 .subtitle{font-size:clamp(0.8rem,2vw,1rem);color:rgba(255,255,255,0.3);letter-spacing:0.3em;text-transform:uppercase;margin-top:0.5rem;}
 .divider{width:80px;height:2px;background:linear-gradient(90deg,transparent,#cc0000,transparent);margin:1rem auto;}
+.token-setup{background:rgba(180,0,0,0.1);border:1px solid rgba(180,0,0,0.3);padding:1.2rem;margin-bottom:1.5rem;width:100%;max-width:480px;display:none;}
+.token-setup.show{display:block;}
+.token-label{font-size:0.8rem;letter-spacing:0.2em;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:0.5rem;}
+.token-input{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:0.6rem 0.8rem;font-family:'Rajdhani',sans-serif;font-size:0.9rem;margin-bottom:0.5rem;}
+.token-save{background:#cc0000;color:#fff;border:none;padding:0.5rem 1.2rem;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.15em;cursor:pointer;width:100%;}
 .btn-grid{display:flex;flex-direction:column;gap:1rem;width:100%;max-width:480px;}
-.rep-btn{
-  display:block;
-  text-decoration:none;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(180,30,30,0.3);
-  padding:1.2rem 2rem;
-  color:#fff;
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(1.3rem,4vw,1.8rem);
-  letter-spacing:0.15em;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-  transition:all 0.2s;
-}
-.rep-btn::before{
-  content:'';position:absolute;left:0;top:0;bottom:0;width:4px;
-  background:#cc0000;box-shadow:0 0 10px rgba(220,30,30,0.6);
-}
-.rep-btn::after{
-  content:'🚛 NEW ACCOUNT';
-  position:absolute;right:1rem;top:50%;transform:translateY(-50%);
-  font-size:0.7rem;letter-spacing:0.2em;
-  color:rgba(255,255,255,0.2);
-  font-family:'Rajdhani',sans-serif;
-}
-.rep-btn:hover{
-  background:rgba(180,0,0,0.15);
-  border-color:rgba(220,30,30,0.7);
-  transform:translateX(4px);
-  box-shadow:0 0 20px rgba(180,0,0,0.2);
-}
-.rep-btn:active{transform:scale(0.98);}
-.instructions{
-  margin-top:2rem;
-  text-align:center;
-  color:rgba(255,255,255,0.2);
-  font-size:0.85rem;
-  letter-spacing:0.15em;
-  text-transform:uppercase;
-  line-height:1.8;
-}
+.rep-btn{display:block;background:rgba(255,255,255,0.03);border:1px solid rgba(180,30,30,0.3);padding:1.2rem 2rem;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:clamp(1.3rem,5vw,2rem);letter-spacing:0.15em;text-align:center;position:relative;overflow:hidden;transition:all 0.2s;cursor:pointer;width:100%;}
+.rep-btn::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:#cc0000;box-shadow:0 0 10px rgba(220,30,30,0.6);}
+.rep-btn:hover,.rep-btn:active{background:rgba(180,0,0,0.2);border-color:rgba(220,30,30,0.7);}
+.rep-btn:disabled{opacity:0.5;cursor:not-allowed;}
+.status{margin-top:1.5rem;text-align:center;font-size:0.9rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.2);min-height:1.5rem;}
+.status.success{color:#cc0000;}
+.status.error{color:#ff6666;}
+.instructions{margin-top:1.5rem;text-align:center;color:rgba(255,255,255,0.15);font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;line-height:2;}
+.setup-link{color:rgba(255,100,100,0.5);cursor:pointer;text-decoration:underline;font-size:0.75rem;}
 </style>
 </head>
 <body>
 <div class="header">
   <div class="logo">Johanson Transportation Service</div>
-  <div class="title">🏆 New Account!</div>
-  <div class="subtitle">Tap your name to celebrate</div>
+  <div class="title">🏆 Got a New Account?</div>
+  <div class="subtitle">Tap your name — both TVs fire instantly</div>
   <div class="divider"></div>
 </div>
 
-<div class="btn-grid">
-  <a class="rep-btn" href="https://dganske5-design.github.io/johanson-celebration/johanson-celebration.html?rep=COLTON+HAFEY" target="_blank">Colton Hafey</a>
-  <a class="rep-btn" href="https://dganske5-design.github.io/johanson-celebration/johanson-celebration.html?rep=CHAD+PROCTOR" target="_blank">Chad Proctor</a>
-  <a class="rep-btn" href="https://dganske5-design.github.io/johanson-celebration/johanson-celebration.html?rep=GRAYSON+GRIMES" target="_blank">Grayson Grimes</a>
-  <a class="rep-btn" href="https://dganske5-design.github.io/johanson-celebration/johanson-celebration.html?rep=MARCIE+ANDRADE" target="_blank">Marcie Andrade</a>
-  <a class="rep-btn" href="https://dganske5-design.github.io/johanson-celebration/johanson-celebration.html?rep=DREW+GANSKE" target="_blank">Drew Ganske</a>
+<div class="token-setup" id="tokenSetup">
+  <div class="token-label">One-time setup — paste your GitHub token</div>
+  <input class="token-input" type="password" id="tokenInput" placeholder="ghp_...">
+  <button class="token-save" onclick="saveToken()">Save & Continue</button>
 </div>
 
-<div class="instructions">
-  Tap your name → both TVs fire instantly 🎉<br>
-  Bookmark this page on your phone
+<div class="btn-grid" id="btnGrid">
+  <button class="rep-btn" onclick="celebrate('COLTON HAFEY',this)">Colton Hafey</button>
+  <button class="rep-btn" onclick="celebrate('CHAD PROCTOR',this)">Chad Proctor</button>
+  <button class="rep-btn" onclick="celebrate('GRAYSON GRIMES',this)">Grayson Grimes</button>
+  <button class="rep-btn" onclick="celebrate('MARCIE ANDRADE',this)">Marcie Andrade</button>
+  <button class="rep-btn" onclick="celebrate('DREW GANSKE',this)">Drew Ganske</button>
 </div>
+
+<div class="status" id="status"></div>
+<div class="instructions">
+  Both TVs will light up within 5 seconds 🚛🎉<br>
+  Bookmark this page on your phone<br>
+  <span class="setup-link" onclick="document.getElementById('tokenSetup').classList.toggle('show')">⚙ Token settings</span>
+</div>
+
+<script>
+const OWNER='dganske5-design';
+const REPO='johanson-celebration';
+
+function getToken(){return localStorage.getItem('jts_gh_token')||'';}
+function saveToken(){
+  const t=document.getElementById('tokenInput').value.trim();
+  if(t){localStorage.setItem('jts_gh_token',t);document.getElementById('tokenSetup').classList.remove('show');document.getElementById('status').textContent='Token saved!';document.getElementById('status').className='status success';setTimeout(()=>{document.getElementById('status').textContent='';document.getElementById('status').className='status';},2000);}
+}
+
+// Show token setup if no token saved
+window.addEventListener('load',()=>{
+  if(!getToken())document.getElementById('tokenSetup').classList.add('show');
+});
+
+async function celebrate(name,btn){
+  const token=getToken();
+  if(!token){document.getElementById('tokenSetup').classList.add('show');return;}
+  const status=document.getElementById('status');
+  const btns=document.querySelectorAll('.rep-btn');
+  btns.forEach(b=>b.disabled=true);
+  status.textContent='Firing celebration for '+name+'...';
+  status.className='status';
+  try{
+    const getRes=await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/trigger.json`,{headers:{'Authorization':'token '+token}});
+    let sha='';
+    if(getRes.ok){const d=await getRes.json();sha=d.sha;}
+    const payload=JSON.stringify({name:name,timestamp:new Date().toISOString()});
+    const content=btoa(payload);
+    const body={message:'Celebration: '+name,content:content};
+    if(sha)body.sha=sha;
+    const putRes=await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/trigger.json`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json'},body:JSON.stringify(body)});
+    if(putRes.ok){status.textContent='🎉 TVs firing for '+name+'!';status.className='status success';}
+    else{const e=await putRes.json();status.textContent='Error: '+(e.message||'Try again');status.className='status error';}
+  }catch(e){status.textContent='Error: '+e.message;status.className='status error';}
+  setTimeout(()=>{btns.forEach(b=>b.disabled=false);},3000);
+  setTimeout(()=>{status.textContent='';status.className='status';},6000);
+}
+</script>
 </body>
 </html>

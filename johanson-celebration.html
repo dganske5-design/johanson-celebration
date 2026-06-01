@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Johanson Transportation Service — Celebration Alert</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300;400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#000;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;font-family:'Oswald',sans-serif;position:relative;}
+.deep-bg{position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse 80% 60% at 50% 100%,#1a0000 0%,transparent 70%),radial-gradient(ellipse 100% 80% at 50% 50%,#0a0000 0%,#000 100%);}
+.road-texture{position:fixed;inset:0;z-index:2;background-image:repeating-linear-gradient(90deg,transparent 0px,transparent 48%,rgba(255,255,255,0.012) 49%,rgba(255,255,255,0.012) 51%,transparent 52%,transparent 100%),repeating-linear-gradient(0deg,transparent 0px,transparent 97%,rgba(255,255,255,0.015) 98%,rgba(255,255,255,0.015) 100%);background-size:80px 80px;pointer-events:none;}
+.vignette{position:fixed;inset:0;z-index:3;background:radial-gradient(ellipse 90% 90% at 50% 50%,transparent 40%,rgba(0,0,0,0.85) 100%);pointer-events:none;}
+.bg-flash{position:fixed;inset:0;background:radial-gradient(ellipse at 50% 50%,#ff2200,#8b0000 50%,transparent 80%);opacity:0;pointer-events:none;z-index:4;transition:opacity 0.06s;}
+.content{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;width:100%;min-height:100vh;}
+.standby-wrap{display:flex;flex-direction:column;align-items:center;gap:1.5rem;}
+.standby-emblem{width:clamp(80px,14vw,160px);height:clamp(80px,14vw,160px);border-radius:50%;border:2px solid rgba(180,30,30,0.4);display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 0 40px rgba(180,0,0,0.15),inset 0 0 30px rgba(0,0,0,0.8);}
+.standby-emblem::before{content:'';position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(180,30,30,0.15);}
+.standby-emblem::after{content:'';position:absolute;inset:-12px;border-radius:50%;border:1px solid rgba(180,30,30,0.08);}
+.emblem-inner{font-size:clamp(2.5rem,7vw,6rem);filter:drop-shadow(0 0 12px rgba(255,100,0,0.4));}
+.standby-company{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.2rem,3.5vw,2.5rem);letter-spacing:0.25em;color:rgba(255,255,255,0.18);text-transform:uppercase;}
+.standby-divider{width:clamp(60px,10vw,120px);height:1px;background:linear-gradient(90deg,transparent,rgba(180,30,30,0.5),transparent);}
+.standby-status{font-family:'Rajdhani',sans-serif;font-size:clamp(0.6rem,1.2vw,0.9rem);letter-spacing:0.5em;color:rgba(255,255,255,0.1);text-transform:uppercase;display:flex;align-items:center;gap:0.75rem;}
+.status-dot{width:6px;height:6px;border-radius:50%;background:#cc0000;box-shadow:0 0 8px #cc0000;animation:pulse-dot 2s ease-in-out infinite;}
+@keyframes pulse-dot{0%,100%{opacity:0.4;transform:scale(1);}50%{opacity:1;transform:scale(1.3);}}
+.celeb-wrap{display:none;flex-direction:column;align-items:center;width:100%;}
+.top-bar{display:flex;align-items:center;gap:1.5rem;margin-bottom:clamp(1rem,3vh,2.5rem);opacity:0;transform:translateY(-20px);transition:all 0.5s ease;}
+.top-bar.show{opacity:1;transform:translateY(0);}
+.bar-line{height:1px;width:clamp(40px,8vw,120px);background:linear-gradient(90deg,transparent,rgba(180,30,30,0.7));}
+.bar-line.right{background:linear-gradient(90deg,rgba(180,30,30,0.7),transparent);}
+.company-name-small{font-family:'Bebas Neue',sans-serif;font-size:clamp(0.9rem,2vw,1.5rem);letter-spacing:0.3em;color:rgba(255,255,255,0.45);text-transform:uppercase;}
+.alert-tag{font-family:'Rajdhani',sans-serif;font-size:clamp(0.65rem,1.3vw,1rem);font-weight:700;letter-spacing:0.6em;color:#cc0000;text-transform:uppercase;margin-bottom:clamp(0.5rem,1.5vh,1rem);opacity:0;transition:opacity 0.4s ease 0.15s;display:flex;align-items:center;gap:0.75rem;}
+.alert-tag.show{opacity:1;}
+.alert-tag::before,.alert-tag::after{content:'';display:block;width:30px;height:1px;background:#cc0000;box-shadow:0 0 6px #cc0000;}
+.main-headline{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,18vw,14rem);line-height:0.85;color:#fff;text-transform:uppercase;letter-spacing:0.02em;opacity:0;transform:scale(0.82) translateY(10px);transition:all 0.5s cubic-bezier(0.34,1.4,0.64,1) 0.1s;text-shadow:0 0 80px rgba(220,30,30,0.5),0 2px 4px rgba(0,0,0,0.9),0 8px 30px rgba(0,0,0,0.7);}
+.main-headline.show{opacity:1;transform:scale(1) translateY(0);}
+.main-headline .accent{color:#cc1111;text-shadow:0 0 60px rgba(220,30,30,0.8),0 0 120px rgba(220,30,30,0.4),0 2px 4px rgba(0,0,0,0.9);}
+.sub-headline{font-family:'Oswald',sans-serif;font-size:clamp(1rem,3.5vw,2.8rem);font-weight:300;letter-spacing:0.5em;color:rgba(255,200,50,0.9);text-transform:uppercase;margin-top:0.3rem;opacity:0;transform:translateY(15px);transition:all 0.5s ease 0.35s;text-shadow:0 0 30px rgba(255,180,0,0.5);}
+.sub-headline.show{opacity:1;transform:translateY(0);}
+.name-plate-wrap{margin-top:clamp(1.2rem,3vh,2.5rem);opacity:0;transform:translateX(-30px);transition:all 0.55s cubic-bezier(0.34,1.2,0.64,1) 0.5s;position:relative;}
+.name-plate-wrap.show{opacity:1;transform:translateX(0);}
+.name-plate-bg{position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(180,0,0,0.12),rgba(180,0,0,0.08),transparent);border-top:1px solid rgba(180,30,30,0.5);border-bottom:1px solid rgba(180,30,30,0.5);}
+.name-plate-bg::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:4px;height:70%;background:#cc1111;box-shadow:0 0 15px rgba(220,30,30,0.8);}
+.name-plate-bg::after{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);width:4px;height:70%;background:#cc1111;box-shadow:0 0 15px rgba(220,30,30,0.8);}
+.rep-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,10vw,8rem);color:#fff;letter-spacing:0.08em;padding:0.3rem 3rem;position:relative;text-shadow:0 2px 20px rgba(0,0,0,0.8),0 0 40px rgba(255,255,255,0.05);}
+.bottom-details{display:flex;align-items:center;gap:1.5rem;margin-top:clamp(1rem,3vh,2.5rem);opacity:0;transform:translateY(20px);transition:all 0.5s ease 0.7s;flex-wrap:wrap;justify-content:center;}
+.bottom-details.show{opacity:1;transform:translateY(0);}
+.detail-pill{display:flex;align-items:center;gap:0.6rem;padding:0.5rem 1.2rem;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);position:relative;overflow:hidden;}
+.detail-icon{font-size:clamp(1rem,2.5vw,1.4rem);}
+.detail-text{font-family:'Rajdhani',sans-serif;font-size:clamp(0.7rem,1.5vw,0.95rem);font-weight:600;letter-spacing:0.2em;color:rgba(255,255,255,0.55);text-transform:uppercase;}
+canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:9;}
+</style>
+</head>
+<body>
+<div class="deep-bg"></div>
+<div class="road-texture"></div>
+<div class="vignette"></div>
+<div class="bg-flash" id="bgFlash"></div>
+<canvas id="confetti"></canvas>
+
+<div class="content" id="standbyScreen">
+  <div class="standby-wrap">
+    <div class="standby-emblem"><div class="emblem-inner">🚛</div></div>
+    <div class="standby-company">Johanson Transportation Service</div>
+    <div class="standby-divider"></div>
+    <div class="standby-status">
+      <div class="status-dot"></div>
+      Celebration Alert System — Standing By
+      <div class="status-dot"></div>
+    </div>
+  </div>
+</div>
+
+<div class="content" id="celebScreen" style="display:none;">
+  <div class="celeb-wrap" id="celebWrap" style="display:flex;">
+    <div class="top-bar" id="topBar">
+      <div class="bar-line"></div>
+      <div class="company-name-small">Johanson Transportation Service</div>
+      <div class="bar-line right"></div>
+    </div>
+    <div class="alert-tag" id="alertTag">New Account Secured</div>
+    <div class="main-headline" id="mainHeadline">New<br><span class="accent">Account</span></div>
+    <div class="sub-headline" id="subHeadline">Just Landed</div>
+    <div class="name-plate-wrap" id="namePlate">
+      <div class="name-plate-bg"></div>
+      <div class="rep-name" id="repName">DREW GANSKE</div>
+    </div>
+    <div class="bottom-details" id="bottomDetails">
+      <div class="detail-pill"><span class="detail-icon">🚛</span><span class="detail-text">New Account</span></div>
+      <div class="detail-pill"><span class="detail-icon">💰</span><span class="detail-text">Revenue Added</span></div>
+      <div class="detail-pill"><span class="detail-icon">🏆</span><span class="detail-text">Team Win</span></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+<script>
+const names=['COLTON HAFEY','CHAD PROCTOR','GRAYSON GRIMES','MARCIE ANDRADE','DREW GANSKE'];
+let celebrating=false;
+const canvas=document.getElementById('confetti');
+const ctx=canvas.getContext('2d');
+let pieces=[];
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight;}
+resize();window.addEventListener('resize',resize);
+
+function burst(x,y,count,colors){
+  for(let i=0;i<count;i++){
+    const angle=Math.random()*Math.PI*2;
+    const speed=2+Math.random()*8;
+    pieces.push({x:x??Math.random()*canvas.width,y:y??-10,vx:Math.cos(angle)*speed*(x?1:0.5),vy:y?Math.sin(angle)*speed:2+Math.random()*6,w:6+Math.random()*8,h:3+Math.random()*5,color:colors[Math.floor(Math.random()*colors.length)],rot:Math.random()*Math.PI*2,vrot:(Math.random()-.5)*0.2,life:1,decay:0.004+Math.random()*0.004});
+  }
+}
+const confettiColors=['#cc1111','#ff3333','#ffcc00','#fff','#ff6600','#e8b800','#ff4444'];
+function drawConfetti(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  pieces=pieces.filter(p=>p.life>0);
+  for(const p of pieces){p.x+=p.vx;p.y+=p.vy;p.vy+=0.1;p.vx*=0.99;p.rot+=p.vrot;p.life-=p.decay;if(p.y>canvas.height+20)p.life=0;ctx.save();ctx.globalAlpha=Math.min(p.life,1);ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle=p.color;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();}
+  if(pieces.length>0||celebrating)requestAnimationFrame(drawConfetti);
+}
+
+async function playSound(){
+  try{
+    await Tone.start();
+    const now=Tone.now();
+    for(let i=0;i<3;i++){const n=new Tone.NoiseSynth({noise:{type:i===0?'pink':'brown'},envelope:{attack:0.05+i*0.05,decay:0.5,sustain:0.3+i*0.1,release:1.2+i*0.3}}).toDestination();const f=new Tone.Filter(800+i*400,'bandpass',{Q:0.8}).toDestination();n.connect(f);n.volume.value=-10-i*3;n.triggerAttackRelease('2n',now+i*0.08);}
+    const cash=new Tone.MetalSynth({frequency:800,envelope:{attack:0.001,decay:0.3,release:0.1},harmonicity:5.1,modulationIndex:24,resonance:5000,octaves:1.5}).toDestination();cash.volume.value=-4;[0.4,0.55,0.68].forEach(t=>cash.triggerAttackRelease('16n',now+t));
+    const ding=new Tone.Synth({oscillator:{type:'triangle'},envelope:{attack:0.001,decay:0.6,sustain:0,release:0.3}}).toDestination();ding.volume.value=-8;ding.triggerAttackRelease('C6','8n',now+0.45);ding.triggerAttackRelease('E6','8n',now+0.58);
+    const rumble=new Tone.Synth({oscillator:{type:'sawtooth'},envelope:{attack:0.3,decay:0.2,sustain:1,release:0.8}});const dist=new Tone.Distortion(0.8);const rg=new Tone.Gain(0.6).toDestination();rumble.connect(dist);dist.connect(rg);rumble.volume.value=-6;rumble.triggerAttackRelease('C1','2n',now+1.4);
+    const r2=new Tone.Synth({oscillator:{type:'sawtooth'},envelope:{attack:0.1,decay:0.1,sustain:1,release:1}});const d2=new Tone.Distortion(0.6);const r2g=new Tone.Gain(0.4).toDestination();r2.connect(d2);d2.connect(r2g);r2.volume.value=-10;r2.triggerAttackRelease('G1','4n',now+1.8);r2.triggerAttackRelease('C2','4n',now+2.3);r2.triggerAttackRelease('G2','2n',now+2.8);
+    const horn=new Tone.PolySynth(Tone.Synth,{oscillator:{type:'sawtooth'},envelope:{attack:0.02,decay:0,sustain:1,release:0.2}}).toDestination();horn.volume.value=-16;horn.triggerAttack(['A2','E3'],now+1.3);horn.triggerRelease(['A2','E3'],now+2.0);horn.triggerAttack(['A2','E3'],now+2.2);horn.triggerRelease(['A2','E3'],now+3.0);
+  }catch(e){}
+}
+
+function flashScreen(){
+  const f=document.getElementById('bgFlash');let c=0;
+  const iv=setInterval(()=>{f.style.opacity=c%2===0?'0.45':'0';c++;if(c>12){clearInterval(iv);f.style.opacity='0';}},120);
+}
+
+function showCeleb(name){
+  document.getElementById('repName').textContent=name;
+  const items=[{id:'topBar',d:0},{id:'alertTag',d:150},{id:'mainHeadline',d:100},{id:'subHeadline',d:300},{id:'namePlate',d:480},{id:'bottomDetails',d:680}];
+  items.forEach(({id,d})=>setTimeout(()=>document.getElementById(id).classList.add('show'),d));
+}
+function hideCeleb(){['topBar','alertTag','mainHeadline','subHeadline','namePlate','bottomDetails'].forEach(id=>document.getElementById(id).classList.remove('show'));}
+
+function triggerCelebration(name){
+  if(celebrating)return;
+  celebrating=true;
+  document.getElementById('standbyScreen').style.display='none';
+  document.getElementById('celebScreen').style.display='flex';
+  flashScreen();playSound();
+  const cx=canvas.width/2,cy=canvas.height/2;
+  burst(cx,cy*0.3,80,confettiColors);
+  setTimeout(()=>burst(null,null,60,confettiColors),600);
+  setTimeout(()=>{burst(cx*0.3,cy*0.5,50,confettiColors);burst(cx*1.7,cy*0.5,50,confettiColors);},1100);
+  setTimeout(()=>burst(null,null,80,confettiColors),1800);
+  requestAnimationFrame(drawConfetti);
+  showCeleb(name||names[Math.floor(Math.random()*names.length)]);
+  setTimeout(()=>{hideCeleb();setTimeout(()=>{document.getElementById('celebScreen').style.display='none';document.getElementById('standbyScreen').style.display='flex';celebrating=false;},700);},7000);
+}
+
+// Listen for Zapier webhook via URL params
+const params=new URLSearchParams(window.location.search);
+if(params.get('rep')){triggerCelebration(decodeURIComponent(params.get('rep')).toUpperCase());}
+
+// Poll for new triggers (Zapier posts to a simple endpoint — reloads with ?rep=NAME)
+window.triggerCelebration=triggerCelebration;
+</script>
+</body>
+</html>
